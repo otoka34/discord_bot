@@ -4,9 +4,8 @@
 
 ## Features
 
-- Moodle自動ログイン
 - 課題取得
-- 24時間以内締切通知
+- 48時間以内締切通知
 - Discord Webhook通知
 
 ## Tech Stack
