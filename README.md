@@ -1,2 +1,16 @@
-# discord_bot
-課題の通知botをDiccordに導入
+# Moodle Discord Bot
+
+大学のMoodle課題締切をDiscordへ通知するBot
+
+## Features
+
+- Moodle自動ログイン
+- 課題取得
+- 24時間以内締切通知
+- Discord Webhook通知
+
+## Tech Stack
+
+- Python
+- Selenium
+- Discord Webhook
