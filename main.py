@@ -11,7 +11,7 @@ ICAL_URL = os.getenv("ICAL_URL")
 response = requests.get(ICAL_URL)
 calendar = Calendar.from_ical(response.text)
 now = datetime.now(timezone.utc)
-limit = now + timedelta(hours=48)
+limit = now + timedelta(hours=72)
 messages = []
 print("===== 48時間以内の課題 =====")
 
