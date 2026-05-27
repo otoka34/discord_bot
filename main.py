@@ -13,7 +13,7 @@ calendar = Calendar.from_ical(response.text)
 now = datetime.now(timezone.utc)
 limit = now + timedelta(hours=72)
 messages = []
-print("===== 48時間以内の課題 =====")
+print("===== 72時間以内の課題 =====")
 
 for component in calendar.walk():
 
@@ -43,12 +43,12 @@ WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK")
 
 if messages:
     content = (
-        "⚠️ 48時間以内に締切の課題があります\n\n"
+        "⚠️ 72時間以内に締切の課題があります\n\n"
         + "\n\n".join(messages)
     )
 else:
     content = (
-        "✅ 48時間以内に締切の課題はありません"
+        "✅ 72時間以内に締切の課題はありません"
     )
 
 requests.post(
