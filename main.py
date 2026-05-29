@@ -48,8 +48,13 @@ for component in calendar.walk():
                 f"あと {hours}時間{minutes}分"
             )
 
+            if hours < 24:
+                alert = "🔥"
+            else:
+                alert = ""
+
             message = (
-                f"【{course}】\n"
+                f"{alert}【{course}】\n"
                 f"{title}\n"
                 f"締切: {deadline_str}\n"
                 f"{remaining_str}"
