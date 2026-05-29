@@ -27,13 +27,32 @@ for component in calendar.walk():
             deadline_jst = deadline.astimezone(
                 ZoneInfo("Asia/Tokyo")
         )
+            weekdays = ["月", "火", "水", "木", "金", "土", "日"]
+
+            weekday = weekdays[deadline_jst.weekday()]
+
             deadline_str = deadline_jst.strftime(
-                "%m/%d %H:%M"
+                f"%m/%d({weekday}) %H:%M"
             )
+
+            remaining = deadline_jst - datetime.now(
+                ZoneInfo("Asia/Tokyo")
+            )
+
+            hours = int(remaining.total_seconds() // 3600)
+            minutes = int(
+                (remaining.total_seconds() % 3600) // 60
+            )
+
+            remaining_str = (
+                f"あと {hours}時間{minutes}分"
+            )
+
             message = (
                 f"【{course}】\n"
                 f"{title}\n"
-                f"締切: {deadline_str}"
+                f"締切: {deadline_str}\n"
+                f"{remaining_str}"
             )
             messages.append(message)
 
