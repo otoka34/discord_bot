@@ -19,7 +19,7 @@ for url in ICAL_URLS:
     calendars.append(Calendar.from_ical(response.text))
 
 now = datetime.now(timezone.utc)
-limit = now + timedelta(hours=120)
+limit = now + timedelta(hours=72)
 events = []
 
 print("===== 72時間以内の課題 =====")
