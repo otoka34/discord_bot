@@ -7,10 +7,6 @@ from zoneinfo import ZoneInfo
 
 load_dotenv()
 
-#ICAL_URL = os.getenv("ICAL_URL")
-ICAL_URL_1 = os.getenv("ICAL_URL_1")  # Moodle
-ICAL_URL_2 = os.getenv("ICAL_URL_2")  # 締切管理
-
 ICAL_URLS = [
     os.getenv("ICAL_URL_1"),
     os.getenv("ICAL_URL_2")
@@ -23,8 +19,9 @@ for url in ICAL_URLS:
     calendars.append(Calendar.from_ical(response.text))
 
 now = datetime.now(timezone.utc)
-limit = now + timedelta(hours=72)
-messages = []
+limit = now + timedelta(hours=120)
+events = []
+
 print("===== 72時間以内の課題 =====")
 
 for calendar in calendars:
@@ -37,7 +34,7 @@ for calendar in calendars:
             if categories:
                 course = categories.cats[0].to_ical().decode()
             else:
-                course = "締切管理"
+                course = "基幹情報学特別演習"
 
             deadline = component.get("dtstart").dt
 
@@ -77,7 +74,14 @@ for calendar in calendars:
                     f"締切: {deadline_str}\n"
                     f"{remaining_str}"
                 )
-                messages.append(message)
+                events.append((deadline_jst, message))
+
+events.sort(key=lambda x: x[0])
+
+messages = [
+    message
+    for _, message in events
+]
 
 WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK")
 

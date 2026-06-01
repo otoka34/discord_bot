@@ -9,7 +9,7 @@ on:
     - cron: '0 3 * * *'  # 日本時間 お昼 12:00（3+9=12）
     - cron: '0 12 * * *' # 日本時間 夜 21:00（12+9=21）
 
-    
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
@@ -29,5 +29,6 @@ jobs:
       - name: Run bot
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          ICAL_URL: ${{ secrets.ICAL_URL }}
+          ICAL_URL_1: ${{ secrets.ICAL_URL_1 }}
+          ICAL_URL_2: ${{ secrets.ICAL_URL_2 }}
         run: python main.py
