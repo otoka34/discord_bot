@@ -19,7 +19,7 @@ for url in ICAL_URLS:
     calendars.append(Calendar.from_ical(response.text))
 
 now = datetime.now(timezone.utc)
-limit = now + timedelta(hours=72)
+limit = now + timedelta(hours=168)
 events = []
 
 print("===== 72時間以内の課題 =====")
@@ -34,7 +34,7 @@ for calendar in calendars:
             if categories:
                 course = categories.cats[0].to_ical().decode()
             else:
-                course = "基幹情報学特別演習"
+                course = ""
 
             deadline = component.get("dtstart").dt
 
@@ -68,12 +68,19 @@ for calendar in calendars:
                 else:
                     alert = ""
 
-                message = (
-                    f"{alert}【{course}】\n"
-                    f"{title}\n"
-                    f"締切: {deadline_str}\n"
-                    f"{remaining_str}"
-                )
+                if course:
+                    message = (
+                        f"{alert}【{course}】\n"
+                        f"{title}\n"
+                        f"締切: {deadline_str}\n"
+                        f"{remaining_str}"
+                    )
+                else:
+                    message = (
+                        f"{alert}{title}\n"
+                        f"締切: {deadline_str}\n"
+                        f"{remaining_str}"
+                    )
                 events.append((deadline_jst, message))
 
 events.sort(key=lambda x: x[0])
@@ -87,7 +94,7 @@ WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK")
 
 if messages:
     content = (
-        "⚠️ 72時間以内に締切の課題があります\n\n"
+        "⚠️ 1週間以内に締切の課題があります\n\n"
         + "\n\n".join(messages)
     )
 else:
