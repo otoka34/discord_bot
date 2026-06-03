@@ -64,7 +64,7 @@ for calendar in calendars:
                 )
 
                 if hours < 72:
-                    alert = "⚠️"
+                    alert = "🔥"
                 elif hours < 24:
                     alert = "🔥🔥🔥"
                 else:
