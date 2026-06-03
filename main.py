@@ -22,7 +22,7 @@ now = datetime.now(timezone.utc)
 limit = now + timedelta(hours=168)
 events = []
 
-print("===== 72時間以内の課題 =====")
+print("===== 1週間以内の課題 =====")
 
 for calendar in calendars:
     for component in calendar.walk():
@@ -63,8 +63,10 @@ for calendar in calendars:
                     f"あと {hours}時間{minutes}分"
                 )
 
-                if hours < 24:
-                    alert = "🔥"
+                if hours < 72:
+                    alert = "⚠️"
+                elif hours < 24:
+                    alert = "🔥🔥🔥"
                 else:
                     alert = ""
 
@@ -99,7 +101,7 @@ if messages:
     )
 else:
     content = (
-        "✅ 72時間以内に締切の課題はありません"
+        "✅ 1週間以内に締切の課題はありません"
     )
 
 requests.post(
