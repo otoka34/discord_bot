@@ -63,10 +63,10 @@ for calendar in calendars:
                     f"あと {hours}時間{minutes}分"
                 )
 
-                if hours < 72:
-                    alert = "🔥"
-                elif hours < 24:
+                if hours < 24:
                     alert = "🔥🔥🔥"
+                elif hours < 72:
+                    alert = "🔥"
                 else:
                     alert = ""
 
