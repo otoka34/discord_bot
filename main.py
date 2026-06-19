@@ -91,9 +91,9 @@ for calendar in calendars:
                         alert = ""
 
                     if course:
-                        message = f"{alert}【{course}】\n{title}\n\n締切: {deadline_str}\n{remaining_str}"
+                        message = f"{alert}【{course}】\n{title}\n締切: {deadline_str}\n{remaining_str}"
                     else:
-                        message = f"{alert}{title}\n\n締切: {deadline_str}\n{remaining_str}"
+                        message = f"{alert}{title}\n締切: {deadline_str}\n{remaining_str}"
                     
                     events.append((deadline_jst, message))
 
