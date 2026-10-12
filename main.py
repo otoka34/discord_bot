@@ -9,7 +9,8 @@ from dateutil.rrule import rrulestr
 load_dotenv()
 
 ICAL_URLS = [
-    os.getenv("ICAL_URL_1"),
+    # Moodle(LMS)が利用できないため一時的に無効化。復旧したらコメントを外す
+    # os.getenv("ICAL_URL_1"),
     os.getenv("ICAL_URL_2")
 ]
 
