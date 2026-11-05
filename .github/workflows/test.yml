@@ -30,6 +30,6 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           # Moodle(LMS)が利用できないため一時的に無効化。復旧したらコメントを外す
-          # ICAL_URL_1: ${{ secrets.ICAL_URL_1 }}
+          ICAL_URL_1: ${{ secrets.ICAL_URL_1 }}
           ICAL_URL_2: ${{ secrets.ICAL_URL_2 }}
         run: python main.py

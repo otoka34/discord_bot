@@ -18,6 +18,8 @@ ICAL_SOURCES = [
 calendars = []
 
 for source in ICAL_SOURCES:
+    if not source["url"]:
+        continue
     response = requests.get(source["url"])
     calendars.append((Calendar.from_ical(response.text), source["assignments_only"]))
 
