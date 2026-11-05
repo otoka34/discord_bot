@@ -8,17 +8,18 @@ from dateutil.rrule import rrulestr
 
 load_dotenv()
 
-ICAL_URLS = [
-    # Moodle(LMS)が利用できないため一時的に無効化。復旧したらコメントを外す
-    # os.getenv("ICAL_URL_1"),
-    os.getenv("ICAL_URL_2")
+ICAL_SOURCES = [
+    # ICAL_URL_1: Moodle(LMS)。通常の授業コマと課題の提出期限が混在しているため、
+    # 「提出期限」を含むイベントのみを課題として扱う
+    {"url": os.getenv("ICAL_URL_1"), "assignments_only": True},
+    {"url": os.getenv("ICAL_URL_2"), "assignments_only": False},
 ]
 
 calendars = []
 
-for url in ICAL_URLS:
-    response = requests.get(url)
-    calendars.append(Calendar.from_ical(response.text))
+for source in ICAL_SOURCES:
+    response = requests.get(source["url"])
+    calendars.append((Calendar.from_ical(response.text), source["assignments_only"]))
 
 now = datetime.now(timezone.utc)
 limit = now + timedelta(hours=168)
@@ -26,14 +27,21 @@ events = []
 
 print("===== 1週間以内の課題 =====")
 
-for calendar in calendars:
+for calendar, assignments_only in calendars:
     for component in calendar.walk():
         if component.name == "VEVENT":
             title = str(component.get("summary"))
+
+            # 通常の授業コマ（毎週の講義予定）は課題ではないため除外する
+            if assignments_only and "提出期限" not in title:
+                continue
+
             categories = component.get("categories")
 
             if categories:
-                course = categories.cats[0].to_ical().decode()
+                raw_category = categories.cats[0].to_ical().decode()
+                # カテゴリは「科目コード 科目名」の形式なので科目名だけを取り出す
+                course = raw_category.split(" ", 1)[-1].strip()
             else:
                 course = ""
 
